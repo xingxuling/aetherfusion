@@ -1,0 +1,17 @@
+{
+  "name": "demo-source",
+  "version": "1.0.0",
+  "description": "AetherFusion demo source project — has a utils module to fuse into a target",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"no tests yet\""
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/lodash": "^4.14.202"
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "plan_version": "0.2.0",
+  "module_name": "components",
+  "module_type": "components",
+  "source_module_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/components",
+  "target_match_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/components",
+  "source_project": {
+    "name": "project-b",
+    "path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b"
+  },
+  "target_project": {
+    "name": "project-a",
+    "path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a"
+  },
+  "risk_level": "medium",
+  "strategy": "manual_review",
+  "score_summary": {
+    "value_score": 90.0,
+    "portability_score": 75.0,
+    "conflict_score": 50.0,
+    "priority_score": 135.0
+  },
+  "ordered_steps": [
+    {
+      "step": 1,
+      "action": "inspect_same_named_files",
+      "description": "Inspect files in module 'components' for naming collisions between source and target projects.",
+      "details": {
+        "source_paths": [
+          "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/components"
+        ],
+        "target_paths": [
+          "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/components"
+        ],
+        "has_same_named_conflicts": true,
+        "recommended_tool": "Use aetherfusion scan to identify specific file-level conflicts, then manually diff the conflicting files."
+      },
+      "estimated_complexity": "medium"
+    },
+    {
+      "step": 2,
+      "action": "copy_non_conflicting_files",
+      "description": "Identify files in 'components' that do NOT conflict with target files, and prepare a copy plan.",
+      "details": {
+        "condition": "Only files NOT present in target should be copied in this step.",
+        "status": "BLOCKED — v0.2 is read-only; actual file copy is deferred to v0.3+.",
+        "note": "List candidate files here with their source paths. Human review required before copying."
+      },
+      "estimated_complexity": "low"
+    },
+    {
+      "step": 3,
+      "action": "review_import_dependencies",
+      "description": "Review all import/require statements within 'components' files to ensure they resolve correctly in the target project.",
+      "details": {
+        "target_dependencies": "Check if imported modules are available in the target project. If any are missing, add them to the target dependency list.",
+        "relative_imports": "If the module uses relative imports (e.g., '../utils'), verify that the relative path is still valid after fusion.",
+        "status": "Requires manual review — automatic import rewriting is out of scope for v0.2."
+      },
+      "estimated_complexity": "medium"
+    },
+    {
+      "step": 4,
+      "action": "check_config_requirements",
+      "description": "Check if 'components' requires any config changes in the target project (e.g., new aliases, env vars, build config).",
+      "details": {
+        "tsconfig_paths": "If the source project uses tsconfig path aliases (e.g., '@components/*'), ensure the target tsconfig.json includes the same aliases.",
+        "env_vars": "Check for any environment variables used by the module (e.g., API_URL, VITE_*) and document them for the target project.",
+        "build_config": "If using Vite/Webpack configs, check for any module-specific settings that need to be merged."
+      },
+      "estimated_complexity": "medium"
+    },
+    {
+      "step": 5,
+      "action": "prepare_dry_run_patch",
+      "description": "Generate a dry-run preview of all changes that would be made when fusing 'components' into the target project.",
+      "details": {
+        "status": "BLOCKED — v0.2 is planning-only; patch generation is deferred to v0.3+.",
+        "planned_actions": "This step will eventually produce a list of create/copy/modify operations with before/after paths, enabling a human to review the full impact before execution."
+      },
+      "estimated_complexity": "low (planning only)"
+    }
+  ],
+  "required_human_decisions": [
+    {
+      "decision_id": "same_named_files",
+      "question": "How should same-named files in module 'components' be handled?",
+      "context": "Source and target both contain a module named 'components'. Files with identical names exist in both projects and must be resolved.",
+      "options": [
+        {
+          "value": "overwrite",
+          "label": "Overwrite",
+          "description": "Replace target files with source versions."
+        },
+        {
+          "value": "namespace",
+          "label": "Namespace",
+          "description": "Rename source files to avoid collisions (e.g., add '_fusion' suffix)."
+        },
+        {
+          "value": "skip",
+          "label": "Skip",
+          "description": "Skip conflicting files; only copy non-conflicting ones."
+        },
+        {
+          "value": "manual_merge",
+          "label": "Manual Merge",
+          "description": "Manually review and merge each conflicting file."
+        }
+      ],
+      "is_blocking": true
+    },
+    {
+      "decision_id": "dependency_updates",
+      "question": "Should dependency conflicts allow updating package.json / requirements.txt?",
+      "context": "2 dependency version conflict(s) detected. Resolving these may require updating the target project's dependency files.",
+      "options": [
+        {
+          "value": "allow",
+          "label": "Allow Updates",
+          "description": "Permit modification of package.json / requirements.txt to resolve conflicts."
+        },
+        {
+          "value": "deny",
+          "label": "Deny Updates",
+          "description": "Do not modify dependency files; resolve conflicts manually."
+        },
+        {
+          "value": "review",
+          "label": "Review Each",
+          "description": "Review each dependency conflict individually before deciding."
+        }
+      ],
+      "is_blocking": true
+    },
+    {
+      "decision_id": "route_integration",
+      "question": "Should routing conflicts be resolved by integrating into target routes?",
+      "context": "If module 'components' defines its own routes or entry points, decide whether to merge them into the target project's routing system or keep them separate.",
+      "options": [
+        {
+          "value": "integrate",
+          "label": "Integrate Routes",
+          "description": "Merge source routes into the target project's routing system."
+        },
+        {
+          "value": "isolate",
+          "label": "Isolate Routes",
+          "description": "Keep source routes separate — may need a sub-path prefix."
+        },
+        {
+          "value": "defer",
+          "label": "Defer Decision",
+          "description": "Leave routing as-is and revisit after initial fusion."
+        }
+      ],
+      "is_blocking": false
+    },
+    {
+      "decision_id": "preserve_structure",
+      "question": "Should the original directory structure of the source module be preserved?",
+      "context": "Module 'components' at source path(s): C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/components. Target path(s): C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/components.",
+      "options": [
+        {
+          "value": "preserve",
+          "label": "Preserve Structure",
+          "description": "Keep the source module's original directory layout when copying to target."
+        },
+        {
+          "value": "flatten",
+          "label": "Flatten Structure",
+          "description": "Flatten the module files into the target's existing directory structure."
+        },
+        {
+          "value": "adapt",
+          "label": "Adapt to Target",
+          "description": "Reorganize to match the target project's conventions."
+        }
+      ],
+      "is_blocking": false
+    }
+  ],
+  "blocked_actions": [
+    "v0.2 does not modify any source or target project files",
+    "do not automatically overwrite target project files",
+    "do not automatically modify dependency configuration (package.json / requirements.txt)",
+    "do not execute build or test commands (npm build / pytest / etc.)",
+    "do not make any network requests"
+  ],
+  "next_recommended_command": "python -m aetherfusion plan --map C:\\Users\\User\\AppData\\Roaming\\Tencent\\Marvis\\User\\oAN1i2WKBP6qZ8WmwJYcerUhktUU\\workspace\\conv_19e980c1b63_6ad95acd17eb\\output\\reports\\aetherfusion-map.json --module components"
+}

@@ -1,0 +1,516 @@
+{
+  "report_metadata": {
+    "tool": "AetherFusion",
+    "version": "0.1.5",
+    "generated_at": "2026-06-05T22:30:17.810885",
+    "schema_version": "0.1.5"
+  },
+  "projects": {
+    "source": {
+      "name": "project-b",
+      "path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b",
+      "file_count": 8,
+      "directory_count": 5,
+      "config_files": {
+        "package.json": "node",
+        "requirements.txt": "python",
+        "tsconfig.json": "typescript",
+        "vite.config.ts": "vite"
+      },
+      "entry_files": [
+        "src/App.tsx",
+        "src/index.tsx"
+      ],
+      "core_directories": [
+        "src"
+      ],
+      "dependencies": [
+        {
+          "name": "flask",
+          "version": ">=2.3",
+          "type": "pip",
+          "source": "requirements.txt"
+        },
+        {
+          "name": "lodash",
+          "version": "^4.17.21",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "python-dotenv",
+          "version": "~=1.0",
+          "type": "pip",
+          "source": "requirements.txt"
+        },
+        {
+          "name": "react",
+          "version": "^17.0.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "react-dom",
+          "version": "^17.0.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "requests",
+          "version": "==2.28.0",
+          "type": "pip",
+          "source": "requirements.txt"
+        },
+        {
+          "name": "typescript",
+          "version": "^5.3.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "vite",
+          "version": "^5.0.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "vitest",
+          "version": "^1.0.0",
+          "type": "npm",
+          "source": "package.json"
+        }
+      ],
+      "scripts": {
+        "dev": "vite",
+        "test": "vitest"
+      },
+      "tech_stack": [
+        "Node.js",
+        "Python",
+        "React",
+        "TypeScript",
+        "Vite"
+      ],
+      "git_status": "not_git_repo",
+      "git_branch": null,
+      "git_changed_files": []
+    },
+    "target": {
+      "name": "project-a",
+      "path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a",
+      "file_count": 8,
+      "directory_count": 5,
+      "config_files": {
+        "package.json": "node",
+        "requirements.txt": "python",
+        "tsconfig.json": "typescript",
+        "vite.config.ts": "vite"
+      },
+      "entry_files": [
+        "src/App.tsx",
+        "src/index.tsx"
+      ],
+      "core_directories": [
+        "src"
+      ],
+      "dependencies": [
+        {
+          "name": "// requirements comment",
+          "version": "",
+          "type": "pip",
+          "source": "requirements.txt"
+        },
+        {
+          "name": "@types/react",
+          "version": "^18.2.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "axios",
+          "version": "^1.6.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "react",
+          "version": "^18.2.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "react-dom",
+          "version": "^18.2.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "typescript",
+          "version": "^5.3.0",
+          "type": "npm",
+          "source": "package.json"
+        },
+        {
+          "name": "vite",
+          "version": "^5.0.0",
+          "type": "npm",
+          "source": "package.json"
+        }
+      ],
+      "scripts": {
+        "build": "tsc && vite build",
+        "dev": "vite"
+      },
+      "tech_stack": [
+        "Node.js",
+        "Python",
+        "React",
+        "TypeScript",
+        "Vite"
+      ],
+      "git_status": "not_git_repo",
+      "git_branch": null,
+      "git_changed_files": []
+    }
+  },
+  "tech_stack": {
+    "source_stack": [
+      "Node.js",
+      "Python",
+      "React",
+      "TypeScript",
+      "Vite"
+    ],
+    "target_stack": [
+      "Node.js",
+      "Python",
+      "React",
+      "TypeScript",
+      "Vite"
+    ],
+    "shared": [
+      "Node.js",
+      "Python",
+      "React",
+      "TypeScript",
+      "Vite"
+    ],
+    "unique_to_source": [],
+    "unique_to_target": []
+  },
+  "dependencies": {
+    "common": [
+      {
+        "name": "react",
+        "source_version": "^17.0.0",
+        "target_version": "^18.2.0",
+        "type": "unknown",
+        "conflict": true
+      },
+      {
+        "name": "react-dom",
+        "source_version": "^17.0.0",
+        "target_version": "^18.2.0",
+        "type": "unknown",
+        "conflict": true
+      },
+      {
+        "name": "typescript",
+        "source_version": "^5.3.0",
+        "target_version": "^5.3.0",
+        "type": "unknown",
+        "conflict": false
+      },
+      {
+        "name": "vite",
+        "source_version": "^5.0.0",
+        "target_version": "^5.0.0",
+        "type": "unknown",
+        "conflict": false
+      }
+    ],
+    "unique_to_source": [
+      {
+        "name": "flask",
+        "version": ">=2.3",
+        "type": "pip",
+        "source": "requirements.txt"
+      },
+      {
+        "name": "lodash",
+        "version": "^4.17.21",
+        "type": "npm",
+        "source": "package.json"
+      },
+      {
+        "name": "python-dotenv",
+        "version": "~=1.0",
+        "type": "pip",
+        "source": "requirements.txt"
+      },
+      {
+        "name": "requests",
+        "version": "==2.28.0",
+        "type": "pip",
+        "source": "requirements.txt"
+      },
+      {
+        "name": "vitest",
+        "version": "^1.0.0",
+        "type": "npm",
+        "source": "package.json"
+      }
+    ],
+    "unique_to_target": [
+      {
+        "name": "// requirements comment",
+        "version": "",
+        "type": "pip",
+        "source": "requirements.txt"
+      },
+      {
+        "name": "@types/react",
+        "version": "^18.2.0",
+        "type": "npm",
+        "source": "package.json"
+      },
+      {
+        "name": "axios",
+        "version": "^1.6.0",
+        "type": "npm",
+        "source": "package.json"
+      }
+    ],
+    "version_conflicts": [
+      {
+        "name": "react",
+        "source_version": "^17.0.0",
+        "target_version": "^18.2.0"
+      },
+      {
+        "name": "react-dom",
+        "source_version": "^17.0.0",
+        "target_version": "^18.2.0"
+      }
+    ]
+  },
+  "structure": {
+    "common_directories": [
+      "src"
+    ],
+    "unique_to_source": [],
+    "unique_to_target": []
+  },
+  "fusible_modules": [
+    {
+      "module_name": "components",
+      "source_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/components"
+      ],
+      "target_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/components"
+      ],
+      "fusion_feasibility": "high"
+    },
+    {
+      "module_name": "engines",
+      "source_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/engines"
+      ],
+      "target_paths": [],
+      "fusion_feasibility": "transfer"
+    },
+    {
+      "module_name": "hooks",
+      "source_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/hooks"
+      ],
+      "target_paths": [],
+      "fusion_feasibility": "transfer"
+    },
+    {
+      "module_name": "services",
+      "source_paths": [],
+      "target_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/services"
+      ],
+      "fusion_feasibility": "transfer"
+    },
+    {
+      "module_name": "utils",
+      "source_paths": [],
+      "target_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/utils"
+      ],
+      "fusion_feasibility": "transfer"
+    }
+  ],
+  "conflicts": {
+    "version_conflicts": [
+      {
+        "name": "react",
+        "source_version": "^17.0.0",
+        "target_version": "^18.2.0"
+      },
+      {
+        "name": "react-dom",
+        "source_version": "^17.0.0",
+        "target_version": "^18.2.0"
+      }
+    ],
+    "name_conflicts": [
+      {
+        "type": "file",
+        "relative_path": "package.json",
+        "source_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/package.json",
+        "target_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/package.json"
+      },
+      {
+        "type": "file",
+        "relative_path": "requirements.txt",
+        "source_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/requirements.txt",
+        "target_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/requirements.txt"
+      },
+      {
+        "type": "directory",
+        "relative_path": "src",
+        "source_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src",
+        "target_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src"
+      },
+      {
+        "type": "file",
+        "relative_path": "App.tsx",
+        "source_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/App.tsx",
+        "target_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/App.tsx"
+      },
+      {
+        "type": "directory",
+        "relative_path": "components",
+        "source_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/components",
+        "target_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/components"
+      },
+      {
+        "type": "file",
+        "relative_path": "index.tsx",
+        "source_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/index.tsx",
+        "target_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/index.tsx"
+      },
+      {
+        "type": "file",
+        "relative_path": "tsconfig.json",
+        "source_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/tsconfig.json",
+        "target_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/tsconfig.json"
+      },
+      {
+        "type": "file",
+        "relative_path": "vite.config.ts",
+        "source_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/vite.config.ts",
+        "target_path": "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/vite.config.ts"
+      }
+    ],
+    "script_conflicts": [],
+    "entry_conflicts": [
+      "src/App.tsx",
+      "src/index.tsx"
+    ]
+  },
+  "fusion_plan_candidates": [
+    {
+      "module_name": "utils",
+      "module_type": "utils",
+      "source_paths": [],
+      "target_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/utils"
+      ],
+      "value_score": 80.0,
+      "portability_score": 100,
+      "conflict_score": 20.0,
+      "priority_score": 400.0,
+      "risk_level": "low",
+      "reason": "module only in target; no action needed",
+      "recommended_action": "copy_to_target"
+    },
+    {
+      "module_name": "hooks",
+      "module_type": "hooks",
+      "source_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/hooks"
+      ],
+      "target_paths": [],
+      "value_score": 80.0,
+      "portability_score": 90.0,
+      "conflict_score": 30.0,
+      "priority_score": 240.0,
+      "risk_level": "low",
+      "reason": "module only in source; can be copied to target",
+      "recommended_action": "copy_to_target"
+    },
+    {
+      "module_name": "services",
+      "module_type": "services",
+      "source_paths": [],
+      "target_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/services"
+      ],
+      "value_score": 95.0,
+      "portability_score": 95.0,
+      "conflict_score": 60.0,
+      "priority_score": 150.4,
+      "risk_level": "medium",
+      "reason": "module only in target; no action needed; high risk of integration conflicts",
+      "recommended_action": "copy_to_target"
+    },
+    {
+      "module_name": "components",
+      "module_type": "components",
+      "source_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/components"
+      ],
+      "target_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-a/src/components"
+      ],
+      "value_score": 90.0,
+      "portability_score": 75.0,
+      "conflict_score": 50.0,
+      "priority_score": 135.0,
+      "risk_level": "medium",
+      "reason": "both projects share this module under similar structure; same-named files exist in both projects — manual resolution needed",
+      "recommended_action": "manual_review"
+    },
+    {
+      "module_name": "engines",
+      "module_type": "engines",
+      "source_paths": [
+        "C:/Users/User/AppData/Roaming/Tencent/Marvis/User/oAN1i2WKBP6qZ8WmwJYcerUhktUU/workspace/conv_19e980c1b63_6ad95acd17eb/temp/demo-projects/project-b/src/engines"
+      ],
+      "target_paths": [],
+      "value_score": 90.0,
+      "portability_score": 60.0,
+      "conflict_score": 70.0,
+      "priority_score": 77.1,
+      "risk_level": "high",
+      "reason": "module only in source; can be copied to target; high risk of integration conflicts",
+      "recommended_action": "review_and_replan"
+    }
+  ],
+  "recommendations": [
+    "High feasibility modules found: `components`. Both projects have these under similar directory structures. Consider creating a shared package or merging into one codebase.",
+    "8 file/directory name conflict(s) detected. Resolve naming collisions before fusion: rename files, introduce namespaces, or merge content into a unified file.",
+    "2 dependency version conflict(s) detected. Align to a single version before merging, typically the higher one after verifying compatibility.",
+    "Entry file conflicts: src/App.tsx, src/index.tsx. Multiple entry points exist — consider a monorepo tool (Turborepo, Nx) or a unified entry with routing."
+  ],
+  "git_status": {
+    "source": {
+      "status": "not_git_repo",
+      "branch": null,
+      "changed_files": [],
+      "error_message": null
+    },
+    "target": {
+      "status": "not_git_repo",
+      "branch": null,
+      "changed_files": [],
+      "error_message": null
+    }
+  }
+}

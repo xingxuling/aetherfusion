@@ -1,0 +1,79 @@
+{
+  "patch_version": "0.3.0",
+  "mode": "dry_run",
+  "module_name": "components",
+  "module_type": "components",
+  "source_module_path": "C:\\Users\\User\\AppData\\Roaming\\Tencent\\Marvis\\User\\oAN1i2WKBP6qZ8WmwJYcerUhktUU\\workspace\\conv_19e980c1b63_6ad95acd17eb\\temp\\demo-projects\\project-b\\src\\components",
+  "target_match_path": "C:\\Users\\User\\AppData\\Roaming\\Tencent\\Marvis\\User\\oAN1i2WKBP6qZ8WmwJYcerUhktUU\\workspace\\conv_19e980c1b63_6ad95acd17eb\\temp\\demo-projects\\project-a\\src\\components",
+  "target_exists": true,
+  "risk_level": "medium",
+  "strategy": "manual_review",
+  "summary": {
+    "files_to_add": 1,
+    "files_conflicted": 0,
+    "files_skipped": 0,
+    "dependency_updates_required": 0,
+    "blocked_operations": 0
+  },
+  "operations": [
+    {
+      "type": "add_file",
+      "relative_path": "Card.tsx",
+      "source_absolute": "C:\\Users\\User\\AppData\\Roaming\\Tencent\\Marvis\\User\\oAN1i2WKBP6qZ8WmwJYcerUhktUU\\workspace\\conv_19e980c1b63_6ad95acd17eb\\temp\\demo-projects\\project-b\\src\\components\\Card.tsx",
+      "file_size_bytes": 12,
+      "resolution_required": false,
+      "blocked_in_dry_run": true
+    }
+  ],
+  "blocked_actions": [
+    "v0.3 dry-run only — no source or target files are modified",
+    "do not automatically overwrite target project files",
+    "do not automatically modify package.json / requirements.txt / pyproject.toml",
+    "do not execute build / test / lint / typecheck",
+    "do not make any network requests"
+  ],
+  "required_human_decisions": [
+    {
+      "decision_id": "resolve_conflicts",
+      "question": "How should files with name conflicts be resolved?",
+      "context": "0 file(s) have same-named counterparts in the target. Each is listed in operations with type 'conflict_same_name'.",
+      "options": [
+        {
+          "value": "overwrite",
+          "label": "Overwrite",
+          "description": "Replace target files with source versions."
+        },
+        {
+          "value": "skip",
+          "label": "Skip",
+          "description": "Skip conflicting files; only add new files."
+        },
+        {
+          "value": "manual_merge",
+          "label": "Manual Merge",
+          "description": "Manually review each conflict."
+        }
+      ],
+      "is_blocking": true
+    },
+    {
+      "decision_id": "review_imports",
+      "question": "Should import dependencies be reviewed or left as-is?",
+      "context": "0 import/dependency note(s) detected. Some source files reference modules that may not exist in the target project.",
+      "options": [
+        {
+          "value": "review_all",
+          "label": "Review All",
+          "description": "Manually review each import note."
+        },
+        {
+          "value": "defer",
+          "label": "Defer",
+          "description": "Leave import review for v0.4+."
+        }
+      ],
+      "is_blocking": false
+    }
+  ],
+  "next_recommended_command": "python -m aetherfusion patch --plan C:\\Users\\User\\AppData\\Roaming\\Tencent\\Marvis\\User\\oAN1i2WKBP6qZ8WmwJYcerUhktUU\\workspace\\conv_19e980c1b63_6ad95acd17eb\\output\\reports\\fusion-plan-components.json --dry-run"
+}
