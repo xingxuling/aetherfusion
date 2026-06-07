@@ -30,8 +30,15 @@ class TestGitChecker:
 
     def test_empty_string_path_does_not_crash(self) -> None:
         """Empty string path — gracefully returns not_git_repo."""
-        result = check_git_status(Path(""))
-        assert result["status"] == "not_git_repo"
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            orig_cwd = os.getcwd()
+            try:
+                os.chdir(td)
+                result = check_git_status(Path(""))
+                assert result["status"] == "not_git_repo"
+            finally:
+                os.chdir(orig_cwd)
 
     def test_result_has_required_keys(self) -> None:
         """Every result dict must contain the four canonical keys."""

@@ -6,3 +6,12 @@ __pycache__/
 dist/
 build/
 .eggs/
+node_modules/
+reports/
+aether-fusion-reports/
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.tmp

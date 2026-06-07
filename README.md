@@ -1,29 +1,8 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: b43d9e79e7d49311cb99af87a8f606d0_0d49767a611811f19f62525400d9a7a1
-    ReservedCode1: eQ2maYGFnuSaTyRiJFfAy+Ivrt9z0GR/hZN6EEEaAacmx+aQUWzSquyPMH1DOhAn79J4QmfpsqEmCfNNLHO7o5fGijAEHevp6ghJsiaT1nxnDBLDyxoqQCB5jiXxK2WBynIROIwdyoKyTEGlKR0zhAxGtA06jfWWP0i6FIj78J4jN0MJ7N9lXb7a0WM=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: b43d9e79e7d49311cb99af87a8f606d0_0d49767a611811f19f62525400d9a7a1
-    ReservedCode2: eQ2maYGFnuSaTyRiJFfAy+Ivrt9z0GR/hZN6EEEaAacmx+aQUWzSquyPMH1DOhAn79J4QmfpsqEmCfNNLHO7o5fGijAEHevp6ghJsiaT1nxnDBLDyxoqQCB5jiXxK2WBynIROIwdyoKyTEGlKR0zhAxGtA06jfWWP0i6FIj78J4jN0MJ7N9lXb7a0WM=
----
-
-
-
-
-
-
-
-
-
-
-
-
-
 # AetherFusion v1.0.1
 
-Local Code Project Fusion Tool — End-to-End Session Orchestration
+AetherFusion is a safe codebase fusion pipeline. It helps developers compare, plan, preview, apply, verify, diagnose, rollback, and audit code migrations between software projects.
+
+> **Do not let AI agents blindly modify repositories. Make codebase fusion inspectable, reversible, and auditable.**
 
 Scans two local projects and runs a complete fusion session: scan → plan → patch → optional apply → optional verify → optional diagnostic plans. v1.0 is an **orchestration layer** that chains existing subcommands into a single auditable, reusable session. It does not add new repair capabilities.
 

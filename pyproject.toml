@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "aetherfusion"
+version = "1.0.1"
+description = "Safe codebase fusion pipeline: scan, plan, preview, apply, verify, diagnose, rollback, and audit code migrations."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.9"
+authors = [
+    {name = "TaoWind Interactive Technology Limited"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Version Control",
+]
+
+[project.scripts]
+aetherfusion = "aetherfusion.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/taowind/aetherfusion"
+Repository = "https://github.com/taowind/aetherfusion"
+
+[tool.setuptools.packages.find]
+include = ["aetherfusion*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
