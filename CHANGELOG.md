@@ -2,6 +2,18 @@
 
 All notable changes to AetherFusion.
 
+## [Unreleased]
+
+### Added
+- Explicit `.aetherfusion-assets.json` allow-list for audited TFLite, ONNX, and other runtime assets.
+- `add_asset` patch/apply operation with size and SHA-256 verification.
+- Deterministic target path for source-only modules.
+- Regression tests for verified assets and path containment.
+
+### Security
+- Reject absolute relative paths, target-root escapes, source-root escapes, and symbolic-link sources.
+- Revalidate asset SHA-256 at apply time immediately before copying.
+
 ## [1.0.1] — 2026-06-07
 
 ### Added
