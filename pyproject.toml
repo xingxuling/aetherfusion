@@ -29,8 +29,8 @@ classifiers = [
 aetherfusion = "aetherfusion.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/taowind/aetherfusion"
-Repository = "https://github.com/taowind/aetherfusion"
+Homepage = "https://github.com/xingxuling/aetherfusion"
+Repository = "https://github.com/xingxuling/aetherfusion"
 
 [tool.setuptools.packages.find]
 include = ["aetherfusion*"]
