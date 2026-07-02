@@ -5,7 +5,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-# Directories excluded from directory-tree traversal
 IGNORE_DIRS: set[str] = {
     "node_modules", ".git", "dist", "build", "__pycache__",
     "venv", ".venv", "env", ".env", ".tox",
@@ -15,19 +14,15 @@ IGNORE_DIRS: set[str] = {
     ".codebuddy", ".cursor", ".workbuddy", ".marvis",
 }
 
-# File patterns that signal project entry points
 ENTRY_PATTERNS: list[str] = [
-    # JavaScript / TypeScript / React / Vite
     "src/index.tsx", "src/index.ts", "src/index.jsx", "src/index.js",
     "src/main.tsx", "src/main.ts", "src/main.jsx", "src/main.js",
     "src/App.tsx", "src/App.ts", "src/App.jsx", "src/App.js",
     "pages/index.tsx", "pages/index.ts", "pages/index.jsx",
-    # Python
     "main.py", "app.py", "run.py", "manage.py",
     "src/main.py", "src/app.py", "src/__main__.py",
 ]
 
-# Directories commonly containing reusable / shared code
 FUSIBLE_DIR_NAMES: set[str] = {
     "components", "lib", "utils", "services", "engines",
     "skills", "models", "training", "hooks", "stores",
@@ -36,7 +31,6 @@ FUSIBLE_DIR_NAMES: set[str] = {
     "helpers", "shared", "common",
 }
 
-# Config file names to scan for
 CONFIG_FILES: dict[str, str] = {
     "package.json": "node",
     "requirements.txt": "python",
@@ -86,8 +80,8 @@ def safe_read_text(path: Path) -> str | None:
 
 
 def normalize_path_for_report(path: str | Path) -> str:
-    """Normalize a path for display in the report (forward slashes)."""
-    return str(path).replace(os.sep, "/")
+    """Normalize Windows and host-native separators for stable reports."""
+    return str(path).replace("\\", "/").replace(os.sep, "/")
 
 
 def is_symlink(path: Path) -> bool:

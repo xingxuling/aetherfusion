@@ -55,6 +55,23 @@ def generate_fusion_plan(
     source_module_path = _pick_first(candidate.get("source_paths", []))
     target_match_path = _pick_first(candidate.get("target_paths", []))
 
+    # Source-only transfer modules still need a deterministic destination.
+    # Use <target_project>/<module_name> rather than leaving the path empty;
+    # safe_apply will create the directory without overwriting existing files.
+    source_only_transfer = (
+        not target_match_path
+        and bool(source_module_path)
+        and (
+            candidate.get("fusion_feasibility") == "transfer"
+            or candidate.get("recommended_action") == "copy_to_target"
+            or not candidate.get("target_paths", [])
+        )
+    )
+    if source_only_transfer:
+        target_root = target_info.get("path", "")
+        if target_root:
+            target_match_path = str((Path(target_root) / module_name).resolve())
+
     return {
         "plan_version": __version__,
         "module_name": module_name,
@@ -298,7 +315,7 @@ def _build_human_decisions(
         "question": "Should the original directory structure of the source module be preserved?",
         "context": (
             f"Module '{module_name}' at source path(s): {', '.join(source_paths) if source_paths else '(none)'}. "
-            f"Target path(s): {', '.join(target_paths) if target_paths else '(none)'}."
+            f"Target path(s): {', '.join(target_paths) if target_paths else '(none)'} ."
         ),
         "options": [
             {"value": "preserve", "label": "Preserve Structure", "description": "Keep the source module's original directory layout when copying to target."},

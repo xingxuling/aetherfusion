@@ -8,6 +8,7 @@ review_import_dependency / dependency_update_required / skip_unsafe.
 v0.3: dry-run only. No files are modified on disk.
 """
 
+import hashlib
 import json
 import os
 import re
@@ -19,6 +20,8 @@ from aetherfusion.utils import IGNORE_DIRS
 
 # Files larger than this are flagged skip_unsafe
 MAX_FILE_SIZE_BYTES: int = 1_048_576  # 1 MB
+MAX_VERIFIED_ASSET_SIZE_BYTES: int = 67_108_864  # 64 MB
+ASSET_MANIFEST_NAME: str = ".aetherfusion-assets.json"
 
 # Extensions commonly considered text (NOT binary)
 TEXT_EXTENSIONS: set[str] = {
@@ -82,6 +85,7 @@ def generate_dry_run_patch(plan_path: Path) -> dict[str, Any]:
         )
 
     target_exists = target_match_path is not None and os.path.isdir(target_match_path)
+    declared_assets = _load_asset_manifest(source_module_path)
 
     operations: list[dict[str, Any]] = []
     files_to_add: list[str] = []
@@ -99,11 +103,13 @@ def generate_dry_run_patch(plan_path: Path) -> dict[str, Any]:
         files_conflicted=files_conflicted,
         files_skipped=files_skipped,
         import_notes=import_notes,
+        declared_assets=declared_assets,
     )
 
     # Build summary
     summary = {
         "files_to_add": len(files_to_add),
+        "verified_assets_to_add": sum(1 for op in operations if op.get("type") == "add_asset"),
         "files_conflicted": len(files_conflicted),
         "files_skipped": len(files_skipped),
         "dependency_updates_required": 0,
@@ -189,6 +195,7 @@ def _walk_and_classify(
     files_conflicted: list[str],
     files_skipped: list[str],
     import_notes: list[dict[str, Any]],
+    declared_assets: dict[str, dict[str, Any]],
 ) -> None:
     """Walk the source module and classify each file into an operation.
 
@@ -204,8 +211,18 @@ def _walk_and_classify(
 
             # ---- Safety checks ----
 
-            # Path traversal detection
-            if ".." in rel_path.split(os.sep):
+            # Symlinks are never fused automatically: they may escape the source root.
+            if os.path.islink(source_file):
+                _add_skip(operations, files_skipped, rel_path,
+                          "Symbolic link — automatic fusion skipped")
+                continue
+
+            # Path traversal / source-root escape detection
+            if (
+                ".." in rel_path.split(os.sep)
+                or os.path.isabs(rel_path)
+                or not _is_path_within(source_file, source_root)
+            ):
                 _add_skip(operations, files_skipped, rel_path, "Path traversal detected — unsafe path")
                 continue
 
@@ -216,7 +233,29 @@ def _walk_and_classify(
                 _add_skip(operations, files_skipped, rel_path, "Cannot stat file — read error")
                 continue
 
-            if file_size > MAX_FILE_SIZE_BYTES:
+            normalized_rel = rel_path.replace(os.sep, "/")
+            asset_meta = declared_assets.get(normalized_rel)
+            is_verified_asset = False
+            asset_sha256 = None
+
+            if asset_meta:
+                if file_size > MAX_VERIFIED_ASSET_SIZE_BYTES:
+                    _add_skip(operations, files_skipped, rel_path,
+                              f"Verified asset exceeds 64 MB ({file_size / 1_048_576:.1f} MB)")
+                    continue
+                asset_sha256 = _sha256_file(source_file)
+                expected_sha256 = str(asset_meta.get("sha256", "")).lower()
+                expected_size = asset_meta.get("size_bytes")
+                if expected_sha256 != asset_sha256:
+                    _add_skip(operations, files_skipped, rel_path,
+                              "Declared asset SHA-256 does not match source file")
+                    continue
+                if expected_size is not None and int(expected_size) != file_size:
+                    _add_skip(operations, files_skipped, rel_path,
+                              "Declared asset size does not match source file")
+                    continue
+                is_verified_asset = True
+            elif file_size > MAX_FILE_SIZE_BYTES:
                 _add_skip(
                     operations, files_skipped, rel_path,
                     f"File exceeds 1 MB ({file_size / 1_048_576:.1f} MB) — "
@@ -233,7 +272,7 @@ def _walk_and_classify(
                 or name_lower in {"dockerfile", "makefile", "license", ".gitignore", ".dockerignore"}
                 or "." not in filename  # extension-less files are often text
             )
-            if not is_likely_text and ext:
+            if not is_verified_asset and not is_likely_text and ext:
                 # Additional check: try to read the first 8 KB as text
                 try:
                     with open(source_file, "rb") as f:
@@ -267,19 +306,26 @@ def _walk_and_classify(
                     "blocked_in_dry_run": True,
                 })
             else:
-                # add_file
+                # add_file or explicitly verified binary/large asset
                 files_to_add.append(rel_path)
-                operations.append({
-                    "type": "add_file",
+                operation = {
+                    "type": "add_asset" if is_verified_asset else "add_file",
                     "relative_path": rel_path,
                     "source_absolute": source_file,
                     "file_size_bytes": file_size,
                     "resolution_required": False,
                     "blocked_in_dry_run": True,
-                })
+                }
+                if is_verified_asset:
+                    operation.update({
+                        "sha256": asset_sha256,
+                        "asset_verified": True,
+                        "asset_role": asset_meta.get("role", "runtime_asset"),
+                    })
+                operations.append(operation)
 
             # ---- Import / dependency check (text files only) ----
-            if is_likely_text and not target_counterpart:
+            if is_likely_text and not is_verified_asset and not target_counterpart:
                 _check_imports(
                     source_file=source_file,
                     rel_path=rel_path,
@@ -287,6 +333,41 @@ def _walk_and_classify(
                     ext=ext,
                     import_notes=import_notes,
                 )
+
+
+def _is_path_within(path: str, root: str) -> bool:
+    """Return True only when resolved *path* is contained by resolved *root*."""
+    try:
+        return os.path.commonpath([os.path.realpath(path), os.path.realpath(root)]) == os.path.realpath(root)
+    except (OSError, ValueError):
+        return False
+
+
+def _load_asset_manifest(source_module_path: str) -> dict[str, dict[str, Any]]:
+    """Load an explicit SHA-256 allow-list for large/binary runtime assets."""
+    manifest_path = Path(source_module_path) / ASSET_MANIFEST_NAME
+    if not manifest_path.is_file():
+        return {}
+    try:
+        payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    assets: dict[str, dict[str, Any]] = {}
+    for item in payload.get("assets", []):
+        rel = str(item.get("path", "")).replace("\\", "/").strip("/")
+        sha = str(item.get("sha256", "")).lower()
+        if not rel or ".." in rel.split("/") or not re.fullmatch(r"[0-9a-f]{64}", sha):
+            continue
+        assets[rel] = item
+    return assets
+
+
+def _sha256_file(path: str) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def _check_imports(
