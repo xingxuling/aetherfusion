@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta:__legacy__"
 [project]
 name = "aetherfusion"
 version = "1.0.1"
-description = "Safe codebase fusion pipeline: scan, plan, preview, apply, verify, diagnose, rollback, and audit code migrations."
+description = "Safe codebase and capability fusion pipeline: inspect, plan, preview, verify, diagnose, rollback, and audit governed migrations."
 readme = "README.md"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
@@ -26,6 +26,7 @@ classifiers = [
 
 [project.scripts]
 aetherfusion = "aetherfusion.cli:main"
+aetherfusion-capability = "aetherfusion.capability.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/xingxuling/aetherfusion"
