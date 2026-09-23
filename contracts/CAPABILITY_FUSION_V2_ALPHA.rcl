@@ -1,0 +1,56 @@
+# RCL Gap Candidate — AetherFusion Capability Fusion v2 Alpha
+# Status: CANDIDATE, not Canonical RCL.
+
+candidate capability_fusion_v2_ir {
+  strategies: REUSE | WRAP | ADAPT | TRANSPLANT | ABSORB | FEDERATE | REPLACE | IGNORE | REVIEW
+  fields: source_provenance, license_gate, capability_evidence, canonical_layer, canonical_owner, target_overlap, strategy, validation, rollback
+  authority: NONE
+
+  rule: CAPABILITY_IS_NOT_REPOSITORY
+  rule: COPYING_IS_NOT_FUSION
+  rule: EXTERNAL_PROJECT_DOES_NOT_GAIN_CANONICAL_AUTHORITY_BY_IMPORT
+  rule: LICENSE_GATE_PRECEDES_SOURCE_TRANSPLANT
+  rule: EVERY_PROMOTION_REQUIRES_EVIDENCE_AND_ROLLBACK
+}
+
+reality governed_external_capability_fusion {
+  input source_project;
+  input target_project;
+  input source_provenance;
+
+  derive license_assessment;
+  derive capability_candidates;
+  derive canonical_owner_mapping;
+  derive overlap_state;
+  derive fusion_strategy;
+
+  invariant no_blind_repository_copy;
+  invariant no_automatic_dependency_install;
+  invariant no_automatic_target_config_rewrite;
+  invariant no_authoritative_commit_without_gate;
+  invariant provenance_is_preserved;
+  invariant rollback_path_exists_before_apply;
+
+  gate license_gate {
+    allow WRAP when license_assessment.gate == boundary_required;
+    allow REVIEW when license_assessment.gate == review_required;
+    allow ADAPT when license_assessment.gate == allowed_with_notice;
+    require notice_preservation when license_assessment.notice_required == TRUE;
+  }
+
+  gate canonical_owner_gate {
+    require canonical_owner_mapping.status != UNKNOWN before authoritative_commit;
+    prefer ADAPT when overlap_state == OVERLAP;
+    prefer REVIEW when semantic_owner_conflict == TRUE;
+  }
+
+  gate execution_gate {
+    require isolated_branch_or_sandbox == TRUE;
+    require tests_and_benchmarks.status == PASS;
+    require evidence_receipt.present == TRUE;
+    require rollback_path.present == TRUE;
+  }
+
+  evidence capability_fusion_receipt;
+  rollback prior_target_state;
+}

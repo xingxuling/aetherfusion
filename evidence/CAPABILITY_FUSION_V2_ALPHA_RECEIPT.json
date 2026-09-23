@@ -1,0 +1,56 @@
+{
+  "receipt_version": "0.2",
+  "feature": "AetherFusion Capability Fusion v2 Alpha",
+  "branch": "feature/capability-fusion-v2-alpha",
+  "development_mode": {
+    "router": "DWAC/TaoX FourDevelopmentModeRouter",
+    "selected": "NORTH_STAR_BURST",
+    "selected_zh": "北极星爆发模式",
+    "reason": "stable direction plus a dense adjacent portfolio justifies bounded high-throughput closure",
+    "scores": {
+      "WHOLE_ARTIFACT": 0.607,
+      "DEEP_DEVELOPMENT": 0.631,
+      "NORTH_STAR": 0.7985,
+      "NORTH_STAR_BURST": 0.8965
+    }
+  },
+  "targeted_validation": {
+    "pytest": {
+      "command": "python -m pytest tests/test_capability_fusion.py -q",
+      "result": "8 passed",
+      "duration_seconds": 1.67
+    },
+    "compileall": "PASS",
+    "editable_install_no_build_isolation": "PASS",
+    "installed_cli_help": "PASS"
+  },
+  "observed_environment_limit": {
+    "default_editable_install": "BLOCKED_BY_CONTAINER_NETWORK",
+    "detail": "pip build isolation attempted to resolve setuptools>=68.0 from the network, but the container has no external DNS/network access. Re-running with --no-build-isolation succeeded."
+  },
+  "scope": {
+    "new_capability_signatures": 8,
+    "strategies": [
+      "REUSE",
+      "WRAP",
+      "ADAPT",
+      "TRANSPLANT",
+      "ABSORB",
+      "FEDERATE",
+      "REPLACE",
+      "IGNORE",
+      "REVIEW"
+    ],
+    "network_clone": false,
+    "automatic_apply": false,
+    "dependency_install": false,
+    "target_config_rewrite": false
+  },
+  "known_limits": [
+    "Targeted tests were run in a local staging copy of the new package slice.",
+    "The complete historical repository test suite was not run because the execution container cannot clone GitHub directly.",
+    "GitHub Actions was intentionally not used.",
+    "License detection is heuristic and does not replace legal review.",
+    "Capability signatures are a bounded initial catalog, not open-ended semantic understanding."
+  ]
+}
