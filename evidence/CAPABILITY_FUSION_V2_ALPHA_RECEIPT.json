@@ -1,5 +1,5 @@
 {
-  "receipt_version": "0.1",
+  "receipt_version": "0.2",
   "feature": "AetherFusion Capability Fusion v2 Alpha",
   "branch": "feature/capability-fusion-v2-alpha",
   "development_mode": {
@@ -15,11 +15,18 @@
     }
   },
   "targeted_validation": {
-    "command": "python -m pytest tests/test_capability_fusion.py -q",
-    "result": "8 passed",
-    "duration_seconds": 1.89,
+    "pytest": {
+      "command": "python -m pytest tests/test_capability_fusion.py -q",
+      "result": "8 passed",
+      "duration_seconds": 1.67
+    },
     "compileall": "PASS",
-    "cli_help": "PASS"
+    "editable_install_no_build_isolation": "PASS",
+    "installed_cli_help": "PASS"
+  },
+  "observed_environment_limit": {
+    "default_editable_install": "BLOCKED_BY_CONTAINER_NETWORK",
+    "detail": "pip build isolation attempted to resolve setuptools>=68.0 from the network, but the container has no external DNS/network access. Re-running with --no-build-isolation succeeded."
   },
   "scope": {
     "new_capability_signatures": 8,
