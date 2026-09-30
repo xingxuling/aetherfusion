@@ -1,12 +1,44 @@
-# AetherFusion v1.0.1
+# AetherFusion
 
-AetherFusion is a safe codebase fusion pipeline. It helps developers compare, plan, preview, apply, verify, diagnose, rollback, and audit code migrations between software projects.
+**Inspect, plan, and review codebase integration before making changes.**
+
+Package baseline: **v1.0.1**. Current source also includes a separate **Capability Fusion v2 alpha** planner (schema `2.0-alpha.1`); this is not a package-wide v2 release.
+
+AetherFusion is a confirmation-driven codebase fusion pipeline. It helps developers compare, plan, preview, apply, verify, diagnose, rollback, and audit code migrations between software projects.
 
 > **Do not let AI agents blindly modify repositories. Make codebase fusion inspectable, reversible, and auditable.**
 
 Scans two local projects and runs a complete fusion session: scan → plan → patch → optional apply → optional verify → optional diagnostic plans. v1.0 is an **orchestration layer** that chains existing subcommands into a single auditable, reusable session. It does not add new repair capabilities.
 
-**Safe by default** — no apply without `--apply-confirm`, no verify without `--verify`, no automatic dependency installation, no automatic config modification, no automatic import fixes, no target file overwrites, apply only allows `add_file` operations.
+**Session defaults** — no apply without `--apply-confirm`, no verify without `--verify`, no automatic dependency installation, no automatic config modification, no automatic import fixes, and no target file overwrites. Current apply supports `add_file` and integrity-checked `add_asset` operations. Review the [execution boundaries](#safety) before running apply, verify, or rollback.
+
+## Current capability-planning path: v2 alpha
+
+The standalone `aetherfusion-capability` command inspects two local projects and writes a capability-level integration plan:
+
+```bash
+python -m pip install -e .
+aetherfusion-capability \
+  --source ./examples/demo-source \
+  --target ./examples/demo-target \
+  --out ./reports/capability-plan.md \
+  --json ./reports/capability-plan.json
+```
+
+- **Capability candidates:** eight initial signatures match paths, text, and dependency tokens; reported scores are heuristic matches, not proof that an implementation works or an interface is compatible.
+- **Gap/overlap comparison:** matching capability IDs in the target influence the suggested integration strategy.
+- **License review gate:** source-license detection can require manual review. Add `--strict-license` to return exit code 2 when review is required; detection does not replace legal review.
+- **Reviewable outputs:** Markdown and JSON plans include candidate evidence, strategy decisions, blocked gates, and proposed next steps.
+
+This path reads the inspected projects and writes reports. It does **not** copy source into the target, install dependencies, rewrite target configuration, generate working adapters, or execute the listed integration stages. Adapter design, isolation, tests, commit gates, and upstream synchronization are plan entries, not completed operations. The planner is currently separate from `fusion-session`.
+
+See [v2 alpha documentation](docs/CAPABILITY_FUSION_V2_ALPHA.md), [planner source](aetherfusion/capability/planner.py), and the [targeted validation receipt](evidence/CAPABILITY_FUSION_V2_ALPHA_RECEIPT.json).
+
+## Current confirmed-apply path
+
+The existing session/patch workflow remains available. In addition to non-conflicting text files, current source accepts manifest-declared `add_asset` operations with an `asset_verified` flag and matching SHA-256. Text additions are limited to 1 MiB; verified assets to 64 MiB. Existing targets are not overwritten. These checks establish the copy boundary, not application-level integration correctness.
+
+The release notes below describe their historical versions. Their old test totals are not a fresh test result for current main.
 
 ## What's New in v1.0.0
 
@@ -40,7 +72,7 @@ See **[QUICKSTART.md](./QUICKSTART.md)** for a step-by-step guide covering:
 - **[examples/](./examples/)**: demo TypeScript projects for smoke testing — `demo-source` (has utils module) and `demo-target` (missing utils module)
 - **[scripts/smoke_test.py](./scripts/smoke_test.py)**: automated scan → plan → patch --dry-run → fusion-session pipeline on demo projects
 - **Installation**: recommended `pip install -e .` for development; Windows PowerShell examples added
-- **Version**: `1.0.1`; all 344 tests pass
+- **Historical release verification**: v1.0.1 recorded 344 passing tests. This is not a current-main whole-repository result; the v2 alpha receipt records 8 targeted tests and explicitly says the full historical suite was not run.
 
 Install and verify:
 
@@ -285,7 +317,7 @@ python -m aetherfusion patch \
 
 ### CLI — Apply (Confirmed File Addition)
 
-> **v0.4:** Applied with explicit `--confirm`. Only `add_file` operations are applied — no overwrites, no dependency changes, no build/test.
+> Applied with explicit `--confirm`. Current source supports `add_file` and verified `add_asset` additions — no overwrites or automatic dependency changes; this step does not run builds/tests.
 
 ```bash
 # Safely apply non-conflicting new files to the target project
@@ -308,12 +340,13 @@ python -m aetherfusion apply \
 *\* At least one of `--out` or `--json` must be provided.*
 
 **What gets applied:**
-- Only `type: add_file` operations where the target file does **not** already exist
-- Source files that pass safety checks (non-binary, under 1 MB, no path traversal)
+- `type: add_file` or `type: add_asset` operations where the target file does **not** already exist
+- Text source files up to 1 MiB that pass the path and source checks
+- Verified assets up to 64 MiB with a manifest SHA-256 matching the actual source file
 
 **What gets blocked:**
 - `conflict_same_name` — not supported (requires human merge decision)
-- `skip_unsafe` — binary files, oversized files, path traversal attempts
+- `skip_unsafe` — unverified binary files, oversized files, path traversal attempts
 - `review_import_dependency` — dependency resolution deferred to v0.5+
 - Target file already exists — never overwrites
 - Unknown operation types
@@ -695,7 +728,7 @@ Session Summary / Source Target / Modules Processed / Scan Result / Per-Module P
 - No automatic config modification
 - No automatic import fixes
 - No target file overwrites
-- Apply only allows `add_file` operations
+- Apply only allows `add_file` and integrity-checked `add_asset` operations
 
 **Error handling:**
 - Source / target not found → exit 1
@@ -773,7 +806,11 @@ data = generate_json_map(source, target)
 
 ```bash
 pytest tests/ -v
+# Focused capability-planner suite
+python -m pytest tests/test_capability_fusion.py -q
 ```
+
+The checked-in v2 alpha receipt records 8 targeted tests; it explicitly does not establish a full current-main regression pass. No new test execution is claimed by this README refresh.
 
 ## Project Structure
 
@@ -897,18 +934,18 @@ QUICKSTART.md                # Step-by-step usage guide
 ## Safety
 
 - **No network requests** — all scanning is local
-- **No file modifications** — read-only analysis
+- **Analysis boundary** — inspection does not edit the source or target project; report commands write their requested output files
 - **Git read-only** — only inspects `.git` directory, never runs `git commit`, `git push`, or any modifying command
-- **Apply is safe** — only copies non-conflicting `add_file` operations, never overwrites
-- **Rollback is safe** — only deletes files recorded in the rollback manifest's `created_files`; path traversal blocked; config files protected
-- **Verify is safe** — only runs whitelisted commands; blocks rm/del/curl/wget/install; never installs dependencies, never modifies files
+- **Apply boundary** — confirmed addition of non-conflicting `add_file` / verified `add_asset` operations; existing target files are not overwritten
+- **Rollback boundary** — `--confirm` deletes files listed in the rollback manifest after the implementation's path/config checks. Review the manifest and current files before running it; keep an independent backup, especially after subsequent edits.
+- **Verify boundary** — permitted commands execute target-project build/test scripts. The command filter is not an execution sandbox or a guarantee that those scripts cannot modify files; run only trusted projects in an appropriate isolated environment.
 - **Repair-plan is safe** — only analyses verify result errors, never fixes code, never installs, never modifies
 - **Import-fix-plan is safe** — only analyses missing_import errors, never fixes imports, never modifies files, never installs dependencies
 - **Dependency-plan is safe** — only analyses missing_dependency errors, never modifies package.json/requirements.txt/pyproject.toml, never installs packages
 - **Config-plan is safe** — only analyses config errors, never modifies tsconfig.json/vite.config.*/package.json, never creates config files
-- **Fusion-session is safe** — orchestration only; default safe mode (no apply, no verify); no automatic dependency/import/config changes; apply only allows add_file; all operations use existing safe subcommands
+- **Fusion-session boundary** — orchestration only; default mode does not apply or verify. Explicit apply/verify opt-ins use the existing subcommands and their boundaries; the v2 capability planner is not an automatic execution extension.
 - **Audit trail** — every `apply`, `rollback`, `verify`, `repair-plan`, `import-fix-plan`, `dependency-plan`, `config-plan`, and `fusion-session` appends a JSONL event; audit write failures never break the main workflow
-- **Path safety** — all paths are resolved and validated before access
+- **Path handling** — apply validates source/target roots and rejects traversal; do not generalize one subcommand's checks into a whole-tool isolation guarantee
 - **Graceful error handling** — unreadable files are skipped, not crashed on
 - **Ignores** — `node_modules`, `.git`, `dist`, `build`, `__pycache__`, `venv`, `.venv`, `.next`, `.nuxt`, `target`, `.idea`, `.vscode`, `coverage`, and various cache directories are excluded from scanning
 
